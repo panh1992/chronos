@@ -1,4 +1,4 @@
-package org.athena.common.util.crypto;
+package org.core.util.crypto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public final class AESUtil {
 
     private static final String KEY_ALGORITHM = "AES";
 
-    private static final String DEFAULT_CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding"; //默认的加密算法
+    private static final String DEFAULT_CIPHER_ALGORITHM = "RSA/None/OAEPWITHSHA-256ANDMGF1PADDING"; //默认的加密算法
 
     private static final String SIGN_ALGORITHMS = "SHA1PRNG"; // 签名算法
 

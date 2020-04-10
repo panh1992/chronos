@@ -1,0 +1,20 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: account
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chronos?characterEncoding=utf-8
+    username: chronos
+    password: chronos
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    generate-ddl: false
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false

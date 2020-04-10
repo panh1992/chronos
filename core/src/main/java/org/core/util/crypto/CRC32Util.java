@@ -1,4 +1,4 @@
-package org.athena.common.util.crypto;
+package org.core.util.crypto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

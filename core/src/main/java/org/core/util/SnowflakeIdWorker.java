@@ -1,4 +1,4 @@
-package org.athena.common.util;
+package org.core.util;
 
 /**
  * Twitter_Snowflake<br>

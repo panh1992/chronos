@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    consul:
+      discovery:
+        health-check-path: /actuator/health
+        preferIpAddress: true

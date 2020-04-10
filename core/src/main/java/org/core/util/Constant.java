@@ -1,4 +1,4 @@
-package org.athena.common.util;
+package org.core.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ public final class Constant {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    public static final Integer AUTHORIZATION_DURATION = 120;
+    public static final Integer AUTHORIZATION_DURATION = 60 * 24; // 24h
 
     static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 

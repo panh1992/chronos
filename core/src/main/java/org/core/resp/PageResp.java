@@ -1,7 +1,5 @@
-package org.athena.common.resp;
+package org.core.resp;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import java.util.List;
@@ -10,19 +8,14 @@ import java.util.List;
  * 分页实体
  */
 @Getter
-@ApiModel(description = "分页实体")
 public class PageResp<T> {
 
-    @ApiModelProperty("限制")
     private long limit;
 
-    @ApiModelProperty("偏移量")
     private long offset;
 
-    @ApiModelProperty("总记录数")
     private long totalElements;
 
-    @ApiModelProperty("分页内容")
     private List<T> content;
 
     /**

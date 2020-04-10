@@ -1,10 +1,8 @@
-package org.athena.common.util;
+package org.core.util;
 
 import com.google.common.base.Strings;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,13 +16,10 @@ public final class PathUtil {
 
     private static final String STORAGE_PREFIX = "athena:/";
 
-    private static Logger logger = LoggerFactory.getLogger(PathUtil.class);
-
     /**
      * 判断是否为存储路径
      */
     public static boolean isPath(String path, boolean isDir) {
-        logger.info("进行路径校验, {}, {}", path, isDir);
         return true;
     }
 

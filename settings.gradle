@@ -1,2 +1,6 @@
 rootProject.name = 'chronos'
 
+include 'gateway'
+include 'account'
+include 'storage'
+include 'core'

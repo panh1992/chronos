@@ -1,4 +1,4 @@
-package org.athena.plugin.jackson;
+package org.core.util.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

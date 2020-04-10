@@ -1,17 +1,14 @@
-package org.athena.common.util;
+package org.core.util;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import io.dropwizard.jackson.Jackson;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.athena.plugin.jackson.InstantDeserializer;
-import org.athena.plugin.jackson.InstantSerializer;
-import org.athena.plugin.jackson.NumberSerializer;
+import org.core.util.jackson.InstantDeserializer;
+import org.core.util.jackson.InstantSerializer;
+import org.core.util.jackson.NumberSerializer;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -25,10 +22,8 @@ public final class CommonUtil {
     /**
      * 获取系统 jackson 配置的 ObjectMapper 信息
      */
-    @Provides
-    @Singleton
     public static ObjectMapper getObjectMapper() {
-        ObjectMapper mapper = Jackson.newObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         // 禁用空对象转换json校验
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
