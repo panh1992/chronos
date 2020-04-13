@@ -64,6 +64,7 @@ subprojects {
 
     // 排除 bootJar 指定Main方法
     project(":core") {
+        jar { enabled = true }
         bootJar { enabled = false }
     }
 

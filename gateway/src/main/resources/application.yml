@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: gateway
+  cloud:
+    gateway:
+      routes:
+      - id: auth
+        uri: lb://account
+        predicates:
+        - Path=/auth/**
   datasource:
     url: jdbc:postgresql://localhost:5432/chronos?characterEncoding=utf-8
     username: chronos
