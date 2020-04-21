@@ -2,6 +2,7 @@ package org.gateway.security;
 
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
+import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import org.springframework.web.cors.reactive.CorsUtils;
@@ -11,19 +12,23 @@ import reactor.core.publisher.Mono;
 
 public class JwtAuthenticationWebFilter extends AuthenticationWebFilter {
 
-    private String[] authPermitList;
+    private final String[] authPermitList;
 
-    public JwtAuthenticationWebFilter(ReactiveAuthenticationManager authenticationManager,
-                                      JwtAuthenticationConverter converter, String[] authPermitList) {
+    private static final String AUTH_HEADER = "X-Authorization";
+
+    public JwtAuthenticationWebFilter(ReactiveAuthenticationManager authenticationManager, String[] authPermitList,
+                                      ServerAuthenticationFailureHandler authenticationFailureHandler) {
         super(authenticationManager);
-        setServerAuthenticationConverter(converter);
-        setRequiresAuthenticationMatcher(new JWTHeadersExchangeMatcher());
         this.authPermitList = authPermitList;
+        setServerAuthenticationConverter(exchange -> Mono.just(new JwtAuthenticationToken(exchange
+                .getRequest().getHeaders().getFirst(AUTH_HEADER))));
+        setRequiresAuthenticationMatcher(new JWTHeadersExchangeMatcher());
+        setAuthenticationFailureHandler(authenticationFailureHandler);
     }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        return super.filter(exchange.mutate().request(exchange.getRequest()).build(), chain);
+        return super.filter(exchange, chain);
     }
 
     class JWTHeadersExchangeMatcher implements ServerWebExchangeMatcher {
@@ -38,6 +43,7 @@ public class JwtAuthenticationWebFilter extends AuthenticationWebFilter {
                     .flatMap(m -> m.isMatch() ? MatchResult.notMatch() : MatchResult.match());
 
         }
+
     }
 
 }

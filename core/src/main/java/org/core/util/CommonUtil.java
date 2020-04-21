@@ -1,5 +1,6 @@
 package org.core.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -19,11 +20,12 @@ import java.time.Instant;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CommonUtil {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     /**
      * 获取系统 jackson 配置的 ObjectMapper 信息
      */
     public static ObjectMapper getObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
         // 禁用空对象转换json校验
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -39,6 +41,18 @@ public final class CommonUtil {
         mapper.registerModule(numberModule);
 
         return mapper;
+    }
+
+    /**
+     * 将对象转换为json字符串
+     */
+    public static String toJson(Object obj) {
+        ObjectMapper mapper = getObjectMapper();
+        try {
+            return getObjectMapper().writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            return mapper.createObjectNode().toString();
+        }
     }
 
     /**

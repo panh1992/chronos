@@ -10,13 +10,13 @@ import java.util.List;
 @Getter
 public class PageResp<T> {
 
-    private long limit;
+    private final long limit;
 
-    private long offset;
+    private final long offset;
 
-    private long totalElements;
+    private final long totalElements;
 
-    private List<T> content;
+    private final List<T> content;
 
     /**
      * 创建分页响应
@@ -29,11 +29,11 @@ public class PageResp<T> {
     }
 
     public static <T> PageResp<T> of(List<T> content, long limit, long offset, long total) {
-        return new PageResp(content, limit, offset, total);
+        return new PageResp<>(content, limit, offset, total);
     }
 
     public static <T> PageResp<T> of(List<T> content, long limit, long offset) {
-        return new PageResp(content, limit, offset, 0L);
+        return new PageResp<>(content, limit, offset, 0L);
     }
 
 }

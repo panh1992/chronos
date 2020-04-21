@@ -10,6 +10,8 @@ spring:
         uri: lb://account
         predicates:
         - Path=/auth/**
+        filters:
+        - StripPrefix=1
   datasource:
     url: jdbc:postgresql://localhost:5432/chronos?characterEncoding=utf-8
     username: chronos

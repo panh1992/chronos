@@ -1,5 +1,6 @@
 dependencies {
     implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1.1'
-    implementation group: 'com.google.guava', name: 'guava', version: '28.2-jre'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+    compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+    compile group: 'org.bitbucket.b_c', name: 'jose4j', version: '0.7.0'
 }
