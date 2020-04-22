@@ -20,28 +20,32 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
+/**
+ * 用户名、密码 过滤器
+ */
 public class UserAuthenticationWebFilter extends AuthenticationWebFilter {
 
     public UserAuthenticationWebFilter(ReactiveAuthenticationManager authenticationManager,
                                        ServerAuthenticationSuccessHandler authenticationSuccessHandler,
                                        ServerAuthenticationFailureHandler authenticationFailureHandler) {
         super(authenticationManager);
-        setServerAuthenticationConverter(exchange -> exchange.getRequest().getBody().single().flatMap(buffer -> {
-            byte[] bytes = new byte[buffer.readableByteCount()];
-            buffer.read(bytes);
-            DataBufferUtils.release(buffer);
-            JsonNode json;
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                json = mapper.readTree(new String(bytes, StandardCharsets.UTF_8));
-            } catch (IOException e) {
-                throw new BadCredentialsException("token 解析失败");
-            }
-            return Mono.just(new UsernamePasswordAuthenticationToken(json.get("username").getTextValue(),
-                    json.get("password").getTextValue(), Lists.newArrayList()));
-        }));
+        setServerAuthenticationConverter(exchange -> exchange.getRequest().getBody().single()
+                .flatMap(buffer -> {
+                    byte[] bytes = new byte[buffer.readableByteCount()];
+                    buffer.read(bytes);
+                    DataBufferUtils.release(buffer);
+                    JsonNode json;
+                    try {
+                        ObjectMapper mapper = new ObjectMapper();
+                        // noinspection BlockingMethodInNonBlockingContext
+                        json = mapper.readTree(bytes);
+                    } catch (IOException e) {
+                        throw new BadCredentialsException("解析失败");
+                    }
+                    return Mono.just(json);
+                }).map(json -> new UsernamePasswordAuthenticationToken(json.get("username").getTextValue(),
+                        json.get("password").getTextValue(), Lists.newArrayList())));
         setRequiresAuthenticationMatcher(new UserExchangeMatcher());
         setAuthenticationSuccessHandler(authenticationSuccessHandler);
         setAuthenticationFailureHandler(authenticationFailureHandler);

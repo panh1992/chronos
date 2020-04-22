@@ -1,21 +1,16 @@
 package org.gateway.configuration;
 
 import com.google.common.collect.Lists;
-import org.core.resp.ErrorResp;
-import org.core.util.CommonUtil;
 import org.gateway.security.JwtAuthenticationManager;
 import org.gateway.security.JwtAuthenticationWebFilter;
 import org.gateway.security.UserAuthenticationWebFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authentication.DelegatingReactiveAuthenticationManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
-import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
@@ -27,17 +22,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
+import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
-import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
-import java.util.Objects;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -49,13 +42,19 @@ public class SecurityConfiguration {
             "/api/socket/**", "/login", "/auth/accounts/123"};
 
     @Resource
-    private ReactiveAuthenticationManager userAuthenticationManager;
+    private ReactiveAuthenticationManager reactiveAuthenticationManager;
+
+    @Resource
+    private ReactiveAuthorizationManager<AuthorizationContext> authorizationManager;
 
     @Resource
     private ServerAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Resource
     private ServerAuthenticationFailureHandler authenticationFailureHandler;
+
+    @Resource
+    private ServerAuthenticationEntryPoint authorizationDeniedEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -91,30 +90,18 @@ public class SecurityConfiguration {
     SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) {
         return http.securityContextRepository(serverSecurityContextRepository()).httpBasic().disable()
                 .csrf().disable().logout().disable().formLogin().disable()
-                .addFilterAt(new UserAuthenticationWebFilter(userAuthenticationManager, authenticationSuccessHandler,
-                        authenticationFailureHandler), SecurityWebFiltersOrder.FORM_LOGIN)
-                .addFilterAt(new JwtAuthenticationWebFilter(userAuthenticationManager, excludedAuthPages,
+                .addFilterAt(new UserAuthenticationWebFilter(reactiveAuthenticationManager,
+                        authenticationSuccessHandler, authenticationFailureHandler), SecurityWebFiltersOrder.FORM_LOGIN)
+                .addFilterAt(new JwtAuthenticationWebFilter(reactiveAuthenticationManager, excludedAuthPages,
                                 authenticationFailureHandler), SecurityWebFiltersOrder.AUTHORIZATION)
                 .authorizeExchange()
-                .pathMatchers(HttpMethod.OPTIONS).permitAll() // option 请求默认放行
-                .pathMatchers(excludedAuthPages).permitAll() // 无需进行权限过滤的请求路径
-                .anyExchange().access((authentication, authorizationContext) -> {
-                    // TODO: 此处做权限校验
-                    return Mono.just(new AuthorizationDecision(true));
-                }).and()
-                .exceptionHandling().authenticationEntryPoint((exchange, denied) -> {
-                    ServerHttpResponse response = exchange.getResponse();
-
-
-                    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                    InetSocketAddress remoteAddress = exchange.getRequest().getRemoteAddress();
-                    String clientIp = Objects.requireNonNull(remoteAddress).getAddress().getHostAddress();
-                    ErrorResp errorResp = ErrorResp.builder().hostId(clientIp).requestId(exchange.getRequest().getId())
-                            .code(HttpStatus.UNAUTHORIZED.name()).message(denied.getMessage()).build();
-                    return response.writeWith(Mono.just(response.bufferFactory().wrap(CommonUtil.toJson(errorResp)
-                            .getBytes(StandardCharsets.UTF_8))));
-                }).and().build();
+                // 对 option 请求默认放行
+                .pathMatchers(HttpMethod.OPTIONS).permitAll()
+                // 无需进行权限过滤的请求路径
+                .pathMatchers(excludedAuthPages).permitAll()
+                .anyExchange().access(authorizationManager).and()
+                .exceptionHandling().authenticationEntryPoint(authorizationDeniedEntryPoint)
+                .and().build();
     }
 
 }

@@ -7,7 +7,6 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import org.springframework.web.cors.reactive.CorsUtils;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 public class JwtAuthenticationWebFilter extends AuthenticationWebFilter {
@@ -24,11 +23,6 @@ public class JwtAuthenticationWebFilter extends AuthenticationWebFilter {
                 .getRequest().getHeaders().getFirst(AUTH_HEADER))));
         setRequiresAuthenticationMatcher(new JWTHeadersExchangeMatcher());
         setAuthenticationFailureHandler(authenticationFailureHandler);
-    }
-
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        return super.filter(exchange, chain);
     }
 
     class JWTHeadersExchangeMatcher implements ServerWebExchangeMatcher {
