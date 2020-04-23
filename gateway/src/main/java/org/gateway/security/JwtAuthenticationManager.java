@@ -1,6 +1,8 @@
 package org.gateway.security;
 
 import org.core.util.JWTUtil;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
@@ -17,22 +19,21 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
      */
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
-
         if (this.supports(authentication)) {
-            if (Objects.isNull(authentication.getCredentials())) {
-                throw new UsernameNotFoundException("token 不允许为空");
-            }
-            String jwtToken = authentication.getCredentials().toString();
-            try {
-                JWTUtil.validation(jwtToken, 120);
-                // TODO: 放置权限信息
-                authentication.setAuthenticated(true);
-                return Mono.just(authentication);
-            } catch (InvalidJwtException e) {
-                throw new BadCredentialsException("token 验证失败");
-            }
+            return Mono.just(authentication).filter(Objects::nonNull)
+                    .switchIfEmpty(Mono.error(new UsernameNotFoundException("token 不允许为空")))
+                    .flatMap(authentication1 -> {
+                        try {
+                            JwtClaims claims = JWTUtil.validation(authentication.getCredentials().toString(), 120);
+                            UserAuthenticationToken authenticationToken = new UserAuthenticationToken(claims.getSubject());
+                            authenticationToken.setAuthenticated(true);
+                            return Mono.just(authenticationToken);
+                        } catch (InvalidJwtException | MalformedClaimException e) {
+                            return Mono.error(new BadCredentialsException("token 验证失败"));
+                        }
+                    });
         }
-       return Mono.empty();
+        return Mono.empty();
     }
 
     private boolean supports(Authentication authentication) {

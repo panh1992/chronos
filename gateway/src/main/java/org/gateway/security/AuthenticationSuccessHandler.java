@@ -23,15 +23,16 @@ public class AuthenticationSuccessHandler implements ServerAuthenticationSuccess
         ServerHttpResponse response = webFilterExchange.getExchange().getResponse();
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         response.setStatusCode(HttpStatus.OK);
+
         String jwtToken;
         try {
-            jwtToken = JWTUtil.createToken(authentication.toString(), 120L);
+            jwtToken = JWTUtil.createToken(authentication.getName(), 120L);
         } catch (JoseException e) {
             return Mono.error(e);
         }
-        LoginResp loginResp = LoginResp.builder().credentials(jwtToken).build();
-        return response.writeWith(Mono.just(response.bufferFactory().wrap(CommonUtil.toJson(loginResp)
-                .getBytes(StandardCharsets.UTF_8))));
+
+        return response.writeWith(Mono.just(response.bufferFactory().wrap(CommonUtil.toJson(LoginResp.builder()
+                .credentials(jwtToken).build()).getBytes(StandardCharsets.UTF_8))));
 
     }
 

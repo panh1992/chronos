@@ -1,15 +1,18 @@
 package org.gateway.filter;
 
-import org.gateway.security.JwtAuthenticationToken;
+import org.gateway.security.UserAuthenticationToken;
+import org.gateway.security.UserInfo;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -18,18 +21,21 @@ import java.util.Objects;
 @Component
 public class AuthSignatureFilter implements GlobalFilter {
 
+    @Resource
+    private ReactiveUserDetailsService userDetailsService;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        return ReactiveSecurityContextHolder.getContext()
-                .filter(Objects::nonNull)
+        return ReactiveSecurityContextHolder.getContext().filter(Objects::nonNull)
                 .map(SecurityContext::getAuthentication)
-                .filter(authentication -> JwtAuthenticationToken.class.isAssignableFrom(authentication.getClass()))
-                .map(authentication -> (JwtAuthenticationToken) authentication)
-                .map(JwtAuthenticationToken::getCredentials)
-                .flatMap(bearerToken -> {
+                .filter(authentication -> UserAuthenticationToken.class.isAssignableFrom(authentication.getClass()))
+                .map(authentication -> (UserAuthenticationToken) authentication)
+                .map(UserAuthenticationToken::getPrincipal)
+                .flatMap(principal -> {
                     // TODO: 此处进行签名验证, 网关进行请求头添加
+                    UserInfo userInfo = (UserInfo) userDetailsService.findByUsername(principal).block();
                     ServerHttpRequest.Builder builder = exchange.getRequest().mutate();
-                    builder.header("X-user-id", "1233434eewrdswww");
+                    builder.header("X-user-id", String.valueOf(userInfo.getUserId()));
                     ServerHttpRequest request = builder.build();
                     return Mono.just(exchange.mutate().request(request).build());
                 })

@@ -17,7 +17,8 @@ public class AuthRouter {
     @Bean
     public RouterFunction<ServerResponse> peopleRoutes(UserHandler userHandler) {
         return RouterFunctions.route(GET("/accounts").and(accept(APPLICATION_JSON)), userHandler::findAllUser)
-                .andRoute(GET("/accounts/{user_id}").and(accept(APPLICATION_JSON)), userHandler::userInfo);
+                .andRoute(GET("/accounts/{user_id}").and(accept(APPLICATION_JSON)), userHandler::userInfo)
+                .andRoute(GET("/auth/accounts/{username}").and(accept(APPLICATION_JSON)), userHandler::getByUsername);
     }
 
 }

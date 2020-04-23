@@ -2,5 +2,10 @@ spring:
   cloud:
     consul:
       discovery:
+        serviceName: ${spring.application.name}
+        instanceId: ${spring.application.name}-${server.port}
         health-check-path: /actuator/health
         preferIpAddress: true
+feign:
+  hystrix:
+    enabled: true

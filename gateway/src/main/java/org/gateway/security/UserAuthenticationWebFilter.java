@@ -41,7 +41,7 @@ public class UserAuthenticationWebFilter extends AuthenticationWebFilter {
                         // noinspection BlockingMethodInNonBlockingContext
                         json = mapper.readTree(bytes);
                     } catch (IOException e) {
-                        throw new BadCredentialsException("解析失败");
+                        return Mono.error(new BadCredentialsException("解析失败"));
                     }
                     return Mono.just(json);
                 }).map(json -> new UsernamePasswordAuthenticationToken(json.get("username").getTextValue(),

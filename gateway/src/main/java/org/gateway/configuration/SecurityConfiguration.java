@@ -1,9 +1,9 @@
 package org.gateway.configuration;
 
-import com.google.common.collect.Lists;
 import org.gateway.security.JwtAuthenticationManager;
 import org.gateway.security.JwtAuthenticationWebFilter;
 import org.gateway.security.UserAuthenticationWebFilter;
+import org.gateway.service.UserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,10 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -37,7 +34,7 @@ import java.util.LinkedList;
 @EnableReactiveMethodSecurity
 public class SecurityConfiguration {
 
-    //security的鉴权排除的url列表
+    // security的鉴权排除的url列表
     private static final String[] excludedAuthPages = {"/auth/login", "/auth/logout", "/actuator/health",
             "/api/socket/**", "/login", "/auth/accounts/123"};
 
@@ -80,10 +77,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    ReactiveUserDetailsService userDetailsService() {
-        UserDetails userDetails = new User("panhong", passwordEncoder().encode("123456"),
-                Lists.newArrayList());
-        return new MapReactiveUserDetailsService(userDetails);
+    public ReactiveUserDetailsService userDetailsService() {
+        return new UserDetailsService();
     }
 
     @Bean

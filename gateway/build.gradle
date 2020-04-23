@@ -2,8 +2,8 @@ dependencies {
     implementation project(':core')
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-discovery'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'
-    implementation group: 'org.postgresql', name: 'postgresql', version: "${rootProject.postgresqlVersion}"
 }
