@@ -18,3 +18,7 @@ spring:
     generate-ddl: false
     properties:
       hibernate.temp.use_jdbc_metadata_defaults: false
+chronos:
+  snowflake-id:
+    data-center-id: 1
+    worker-id: 1

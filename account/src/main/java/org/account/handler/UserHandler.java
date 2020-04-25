@@ -2,6 +2,7 @@ package org.account.handler;
 
 import org.account.entity.User;
 import org.account.service.UserService;
+import org.core.params.UserParams;
 import org.core.resp.UserRes;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -39,6 +40,14 @@ public class UserHandler {
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(UserRes.builder().userId(user.getUserId()).username(user.getUsername())
                         .password(user.getPassword()).createTime(Instant.now()).build()), UserRes.class);
+    }
+
+    public Mono<ServerResponse> save(ServerRequest serverRequest) {
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                .body(serverRequest.bodyToMono(UserParams.class).flatMap(userParams -> {
+                    userService.save(userParams);
+                    return Mono.empty();
+                }), Void.class);
     }
 
 }

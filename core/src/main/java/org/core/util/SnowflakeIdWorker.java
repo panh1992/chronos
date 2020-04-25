@@ -20,7 +20,7 @@ public final class SnowflakeIdWorker {
     /**
      * 开始时间截 (2015-01-01)
      */
-    private static final long TW_EPOCH = 1420041600000L;
+    private static final long TW_EPOCH = 1587722428612L;
 
     /**
      * 机器id所占的位数

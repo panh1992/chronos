@@ -59,7 +59,8 @@ subprojects {
 
     dependencies {
         testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+        compile group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
     }
 
     // 排除 bootJar 指定Main方法
