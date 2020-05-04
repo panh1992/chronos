@@ -34,9 +34,8 @@ import java.util.LinkedList;
 @EnableReactiveMethodSecurity
 public class SecurityConfiguration {
 
-    // security的鉴权排除的url列表
-    private static final String[] excludedAuthPages = {"/auth/login", "/auth/logout", "/actuator/health",
-            "/api/socket/**", "/login", "/auth/accounts/123"};
+    @Resource
+    private Properties properties;
 
     @Resource
     private ReactiveAuthenticationManager reactiveAuthenticationManager;
@@ -87,13 +86,13 @@ public class SecurityConfiguration {
                 .csrf().disable().logout().disable().formLogin().disable()
                 .addFilterAt(new UserAuthenticationWebFilter(reactiveAuthenticationManager,
                         authenticationSuccessHandler, authenticationFailureHandler), SecurityWebFiltersOrder.FORM_LOGIN)
-                .addFilterAt(new JwtAuthenticationWebFilter(reactiveAuthenticationManager, excludedAuthPages,
-                                authenticationFailureHandler), SecurityWebFiltersOrder.AUTHORIZATION)
+                .addFilterAt(new JwtAuthenticationWebFilter(reactiveAuthenticationManager, properties.getSecurity()
+                        .getExcludedUri(), authenticationFailureHandler), SecurityWebFiltersOrder.AUTHORIZATION)
                 .authorizeExchange()
                 // 对 option 请求默认放行
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 // 无需进行权限过滤的请求路径
-                .pathMatchers(excludedAuthPages).permitAll()
+                .pathMatchers(properties.getSecurity().getExcludedUri()).permitAll()
                 .anyExchange().access(authorizationManager).and()
                 .exceptionHandling().authenticationEntryPoint(authorizationDeniedEntryPoint)
                 .and().build();

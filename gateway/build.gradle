@@ -1,6 +1,7 @@
 dependencies {
     implementation project(':core')
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix'

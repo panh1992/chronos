@@ -27,3 +27,12 @@ spring:
     generate-ddl: false
     properties:
       hibernate.temp.use_jdbc_metadata_defaults: false
+chronos:
+  security:
+    excluded-uri:
+    - /auth/login
+    - /auth/logout
+    - /actuator/health
+    - /api/socket/**
+    - /login
+    - /auth/accounts/123
