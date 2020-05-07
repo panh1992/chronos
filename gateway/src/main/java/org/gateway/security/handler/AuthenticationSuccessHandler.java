@@ -1,4 +1,4 @@
-package org.gateway.security;
+package org.gateway.security.handler;
 
 import org.core.resp.LoginResp;
 import org.core.util.CommonUtil;

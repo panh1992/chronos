@@ -7,7 +7,7 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
  */
 public class UserAuthenticationToken extends AbstractAuthenticationToken {
 
-    private String principal;
+    private final String principal;
 
     public UserAuthenticationToken(String principal) {
         super(null);

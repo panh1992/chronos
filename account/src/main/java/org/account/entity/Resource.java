@@ -3,12 +3,15 @@ package org.account.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.Instant;
 
 /**
  * 系统资源信息
@@ -18,13 +21,16 @@ import java.time.Instant;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "resource", schema = "account")
-public class Resource {
+public class Resource extends TimeEntity {
 
     /**
      * 资源主键
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflake-id")
+    @GenericGenerator(name = "snowflake-id", strategy = "org.account.configuration.SnowflakeIdGenerator")
     private Long resourceId;
 
     /**
@@ -51,16 +57,6 @@ public class Resource {
      * 资源标识
      */
     private String permission;
-
-    /**
-     * 创建时间
-     */
-    private Instant createTime;
-
-    /**
-     * 更新时间
-     */
-    private Instant modifyTime;
 
     /**
      * 权限描述
