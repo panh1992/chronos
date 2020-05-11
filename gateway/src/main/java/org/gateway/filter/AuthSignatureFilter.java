@@ -31,13 +31,13 @@ public class AuthSignatureFilter implements GlobalFilter {
                 .filter(authentication -> UserAuthenticationToken.class.isAssignableFrom(authentication.getClass()))
                 .map(authentication -> (UserAuthenticationToken) authentication)
                 .map(UserAuthenticationToken::getPrincipal)
-                .flatMap(principal -> {
+                .map(principal -> {
                     // TODO: 此处进行签名验证, 网关进行请求头添加
                     UserInfo userInfo = (UserInfo) userDetailsService.findByUsername(principal).block();
                     ServerHttpRequest.Builder builder = exchange.getRequest().mutate();
                     builder.header("X-user-id", String.valueOf(userInfo.getUserId()));
                     ServerHttpRequest request = builder.build();
-                    return Mono.just(exchange.mutate().request(request).build());
+                    return exchange.mutate().request(request).build();
                 })
                 .defaultIfEmpty(exchange)
                 .flatMap(chain::filter);

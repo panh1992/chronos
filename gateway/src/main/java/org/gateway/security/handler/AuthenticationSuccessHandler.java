@@ -3,6 +3,7 @@ package org.gateway.security.handler;
 import org.core.resp.LoginResp;
 import org.core.util.CommonUtil;
 import org.core.util.JWTUtil;
+import org.gateway.configuration.Properties;
 import org.jose4j.lang.JoseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,10 +14,14 @@ import org.springframework.security.web.server.authentication.ServerAuthenticati
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 
 @Component
 public class AuthenticationSuccessHandler implements ServerAuthenticationSuccessHandler {
+
+    @Resource
+    private Properties properties;
 
     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
 
@@ -26,7 +31,8 @@ public class AuthenticationSuccessHandler implements ServerAuthenticationSuccess
 
         String jwtToken;
         try {
-            jwtToken = JWTUtil.createToken(authentication.getName(), 120L);
+            jwtToken = JWTUtil.createToken(authentication.getName(), properties.getSecurity().getJwt()
+                    .getExpirationTimeMinutes());
         } catch (JoseException e) {
             return Mono.error(e);
         }

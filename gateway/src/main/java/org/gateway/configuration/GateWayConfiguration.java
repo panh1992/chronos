@@ -6,9 +6,16 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
 import javax.annotation.Resource;
 
+/**
+ * 网关配置类
+ *
+ * @author panhong
+ */
 @Configuration
 public class GateWayConfiguration {
 
@@ -26,6 +33,14 @@ public class GateWayConfiguration {
     @Bean
     public HttpMessageConverters httpMessageConverter() {
         return new HttpMessageConverters(new MappingJackson2HttpMessageConverter(mapper));
+    }
+
+    /**
+     * 注入路径匹配器
+     */
+    @Bean
+    public PathMatcher pathMatcher() {
+        return new AntPathMatcher();
     }
 
 }

@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constant {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-
-    public static final Integer AUTHORIZATION_DURATION = 60 * 24; // 24h
+    /**
+     * JWT token 请求头
+     */
+    public static final String X_AUTHORIZATION_HEADER = "X-Authorization";
 
     static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 

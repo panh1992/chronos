@@ -37,4 +37,13 @@ public class UserService {
                 .createTime(Instant.now()).modifyTime(Instant.now()).build());
     }
 
+    @Transactional(readOnly = true)
+    public User findUserById(long userId) {
+        Optional<User> optional = userRepository.findById(userId);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        throw EntityNotExistException.build("UserNotFound", "此用户不存在");
+    }
+
 }

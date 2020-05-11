@@ -1,11 +1,17 @@
 package org.account.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.MappedSuperclass;
 import java.time.Instant;
 
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 public class TimeEntity {
 

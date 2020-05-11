@@ -27,7 +27,7 @@ public class AuthorizationDeniedEntryPoint implements ServerAuthenticationEntryP
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         String clientIp = Objects.requireNonNull(exchange.getRequest().getRemoteAddress()).getAddress().getHostAddress();
         ErrorResp errorResp = ErrorResp.builder().hostId(clientIp).requestId(exchange.getRequest().getId())
-                .code(HttpStatus.UNAUTHORIZED.name()).message(denied.getMessage()).build();
+                .code(HttpStatus.UNAUTHORIZED.name()).message("无权访问，请检查授权信息").build();
         return response.writeWith(Mono.just(response.bufferFactory().wrap(CommonUtil.toJson(errorResp)
                 .getBytes(StandardCharsets.UTF_8))));
     }

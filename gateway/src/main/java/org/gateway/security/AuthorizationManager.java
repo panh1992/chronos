@@ -1,5 +1,6 @@
 package org.gateway.security;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.http.HttpMethod;
@@ -9,12 +10,15 @@ import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.util.PathMatcher;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 
 /**
  * 权限校验管理
+ *
+ * @author panhong
  */
 @Slf4j
 @Component
@@ -22,6 +26,9 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 
     @Resource
     private ReactiveRedisTemplate<String, String> reactiveRedisTemplate;
+
+    @Resource
+    private PathMatcher pathMatcher;
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext context) {
@@ -44,7 +51,9 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
      * @return true - 允许访问   false - 不允许访问
      */
     private boolean verification(String username, String path, HttpMethod method) {
-        return reactiveRedisTemplate.opsForSet().isMember(username, path + method).blockOptional().orElse(false);
+        return !reactiveRedisTemplate.opsForSet().scan(username)
+                .filter(uri -> uri.startsWith(method.name()) && pathMatcher.match(uri.substring(method.name()
+                        .length()), path)).collectList().blockOptional().orElse(Lists.newArrayList()).isEmpty();
     }
 
 }

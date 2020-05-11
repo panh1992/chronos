@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: gateway
+  cache:
+    type: redis
+    redis:
+      time-to-live: 30s
   cloud:
     gateway:
       routes:
@@ -12,34 +16,25 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
-  datasource:
-    url: jdbc:postgresql://localhost:5432/chronos?characterEncoding=utf-8
-    username: chronos
-    password: chronos
-  jpa:
-    database: POSTGRESQL
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-    generate-ddl: false
-    properties:
-      hibernate.temp.use_jdbc_metadata_defaults: false
   redis:
     host: 127.0.0.1
     port: 6379
-    password: 123456
-    database: 1
     lettuce:
       pool:
         max-active: 200
         max-idle: 20
         min-idle: 5
         max-wait: 1000
+    cluster:
+      nodes:
+        - 192.168.100.26:3001
+        - 192.168.100.26:3002
+        - 192.168.100.26:3003
 chronos:
   security:
+    jwt:
+      expiration-time-minutes: 1440
+      max-future-validity-in-minutes: 5
     excluded-uri:
       - /auth/login
       - /auth/logout

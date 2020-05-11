@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: account
+  cache:
+    type: redis
+    redis:
+      time-to-live: 30s
   datasource:
     url: jdbc:postgresql://localhost:5432/chronos?characterEncoding=utf-8
     username: chronos
@@ -18,6 +22,17 @@ spring:
     generate-ddl: false
     properties:
       hibernate.temp.use_jdbc_metadata_defaults: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    database: 1
+    lettuce:
+      pool:
+        max-active: 200
+        max-idle: 20
+        min-idle: 5
+        max-wait: 1000
 chronos:
   snowflake-id:
     data-center-id: 1

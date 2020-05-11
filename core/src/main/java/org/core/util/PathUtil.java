@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PathUtil {
 
-    private static final String STORAGE_PREFIX = "athena:/";
+    private static final String STORAGE_PREFIX = "chronos:/";
 
     /**
      * 判断是否为存储路径
@@ -36,7 +36,7 @@ public final class PathUtil {
      */
     public static String getExtName(String fileName) {
 
-        int index = fileName.lastIndexOf(".");
+        int index = fileName.lastIndexOf('.');
 
         return index == -1 ? null : fileName.substring(index + 1);
 

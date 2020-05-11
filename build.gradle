@@ -2,6 +2,7 @@ ext {
     junitVersion = '4.12'
     lombokVersion = '1.18.12'
     postgresqlVersion = '42.2.12'
+    commonsVersion = '2.8.0'
 }
 
 buildscript {
@@ -59,6 +60,7 @@ subprojects {
 
     dependencies {
         testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
+        testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
         compile group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
         annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
     }

@@ -29,9 +29,10 @@ public class UserHandler {
 
     public Mono<ServerResponse> userInfo(ServerRequest serverRequest) {
         System.out.println(serverRequest.exchange().getRequest().getHeaders().getFirst("X-user-id"));
-        Flux<User> listFlux = Flux.fromIterable(userService.findAllUser());
+        Mono<User> userMono = Mono.just(userService.findUserById(Long
+                .parseLong(serverRequest.pathVariable("user_id"))));
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-                .body(listFlux, User.class);
+                .body(userMono, User.class);
     }
 
     public Mono<ServerResponse> getByUsername(ServerRequest serverRequest) {

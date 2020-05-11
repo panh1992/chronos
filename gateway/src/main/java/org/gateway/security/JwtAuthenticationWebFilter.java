@@ -1,5 +1,6 @@
 package org.gateway.security;
 
+import org.core.util.Constant;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
@@ -13,14 +14,12 @@ public class JwtAuthenticationWebFilter extends AuthenticationWebFilter {
 
     private final String[] authPermitList;
 
-    private static final String AUTH_HEADER = "X-Authorization";
-
     public JwtAuthenticationWebFilter(ReactiveAuthenticationManager authenticationManager, String[] authPermitList,
                                       ServerAuthenticationFailureHandler authenticationFailureHandler) {
         super(authenticationManager);
         this.authPermitList = authPermitList;
         setServerAuthenticationConverter(exchange -> Mono.just(new JwtAuthenticationToken(exchange
-                .getRequest().getHeaders().getFirst(AUTH_HEADER))));
+                .getRequest().getHeaders().getFirst(Constant.X_AUTHORIZATION_HEADER))));
         setRequiresAuthenticationMatcher(new JWTHeadersExchangeMatcher());
         setAuthenticationFailureHandler(authenticationFailureHandler);
     }
