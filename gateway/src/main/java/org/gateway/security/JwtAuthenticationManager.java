@@ -1,6 +1,6 @@
 package org.gateway.security;
 
-import org.core.util.JWTUtil;
+import org.core.util.JwtUtil;
 import org.gateway.configuration.Properties;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.MalformedClaimException;
@@ -37,7 +37,7 @@ public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
                         return Mono.error(new UsernameNotFoundException("token 不允许为空"));
                     }
                     try {
-                        JwtClaims claims = JWTUtil.validation(authentication.getCredentials().toString(),
+                        JwtClaims claims = JwtUtil.validation(authentication.getCredentials().toString(),
                                 properties.getSecurity().getJwt().getMaxFutureValidityInMinutes());
                         UserAuthenticationToken authenticationToken = new UserAuthenticationToken(claims.getSubject());
                         authenticationToken.setAuthenticated(true);

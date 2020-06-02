@@ -25,9 +25,11 @@ import java.util.Base64;
  * RSA公钥/私钥/签名工具
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class RSAUtil {
+public final class RsaUtil {
 
-    //非对称密钥算法
+    /**
+     * 非对称密钥算法
+     */
     private static final String KEY_ALGORITHM = "RSA";
 
     /**

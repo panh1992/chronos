@@ -29,8 +29,6 @@ allprojects {
     version '1.0-SNAPSHOT'
 
     apply plugin: 'checkstyle'
-    apply plugin: 'pmd'
-    apply plugin: 'findbugs'
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
@@ -63,12 +61,19 @@ subprojects {
         testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
         compile group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
         annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+        testCompile group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+        testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
     }
 
     // 排除 bootJar 指定Main方法
     project(":core") {
-        jar { enabled = true }
         bootJar { enabled = false }
+        jar { enabled = true }
+    }
+
+    project(":account") {
+        bootJar { enabled = true }
+        jar { enabled = false }
     }
 
     jar {
@@ -82,7 +87,7 @@ subprojects {
     checkstyle {
         toolVersion = '8.31'
         configFile rootProject.file('checkstyle/checkstyle.xml')
-        // sourceSets = [project.sourceSets.main, project.sourceSets.test]
+        sourceSets = [project.sourceSets.main]
         ignoreFailures = false
         showViolations = true
     }

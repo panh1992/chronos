@@ -19,15 +19,21 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class AESUtil {
+public final class AesUtil {
 
     private static final Integer KEY_SIZE = 128;
 
     private static final String KEY_ALGORITHM = "AES";
 
-    private static final String DEFAULT_CIPHER_ALGORITHM = "RSA/None/OAEPWITHSHA-256ANDMGF1PADDING"; //默认的加密算法
+    /**
+     * 默认的加密算法
+     */
+    private static final String DEFAULT_CIPHER_ALGORITHM = "RSA/None/OAEPWITHSHA-256ANDMGF1PADDING";
 
-    private static final String SIGN_ALGORITHMS = "SHA1PRNG"; // 签名算法
+    /**
+     * 签名算法
+     */
+    private static final String SIGN_ALGORITHMS = "SHA1PRNG";
 
     /**
      * AES 加密操作

@@ -3,7 +3,7 @@ package org.core.util;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.core.util.crypto.RSAUtil;
+import org.core.util.crypto.RsaUtil;
 import org.jose4j.jws.AlgorithmIdentifiers;
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
@@ -22,7 +22,7 @@ import java.security.spec.InvalidKeySpecException;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class JWTUtil {
+public final class JwtUtil {
 
     /**
      * 生成一个RSA密钥对，用于JWT的签名和验证
@@ -63,8 +63,8 @@ public final class JWTUtil {
 
     static {
         try {
-            rsaPrivateKey = (RSAPrivateKey) RSAUtil.getPrivateKey(PRIVATE_KEY);
-            rsaPublicKey = (RSAPublicKey) RSAUtil.getPublicKey(PUBLIC_KEY);
+            rsaPrivateKey = (RSAPrivateKey) RsaUtil.getPrivateKey(PRIVATE_KEY);
+            rsaPublicKey = (RSAPublicKey) RsaUtil.getPublicKey(PUBLIC_KEY);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             log.error("获取 JWT 公钥 私钥 异常: {}", e.getMessage());
         }

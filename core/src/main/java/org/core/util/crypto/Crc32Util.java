@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  * CRC32计算
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class CRC32Util {
+public final class Crc32Util {
 
     private static int[] ptiTable = new int[256];
 
