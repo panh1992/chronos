@@ -20,6 +20,9 @@ public class UserHandler {
     @Resource
     private UserService userService;
 
+    /**
+     * 查询用户信息列表
+     */
     public Mono<ServerResponse> findAllUser(ServerRequest serverRequest) {
         System.out.println(serverRequest.exchange().getRequest().getHeaders().getFirst("X-user-id"));
         Flux<User> listFlux = Flux.fromIterable(userService.findAllUser());
@@ -27,6 +30,9 @@ public class UserHandler {
                 .body(listFlux, User.class);
     }
 
+    /**
+     * 查询用户信息
+     */
     public Mono<ServerResponse> userInfo(ServerRequest serverRequest) {
         System.out.println(serverRequest.exchange().getRequest().getHeaders().getFirst("X-user-id"));
         Mono<User> userMono = Mono.just(userService.findUserById(Long
@@ -35,6 +41,9 @@ public class UserHandler {
                 .body(userMono, User.class);
     }
 
+    /**
+     * 根据用户名查询用户信息
+     */
     public Mono<ServerResponse> getByUsername(ServerRequest serverRequest) {
         String username = serverRequest.pathVariable("username");
         User user = userService.findByUsername(username);
@@ -43,6 +52,9 @@ public class UserHandler {
                         .password(user.getPassword()).createTime(Instant.now()).build()), UserRes.class);
     }
 
+    /**
+     * 保存用户信息
+     */
     public Mono<ServerResponse> save(ServerRequest serverRequest) {
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(serverRequest.bodyToMono(UserParams.class).flatMap(userParams -> {

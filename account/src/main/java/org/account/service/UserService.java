@@ -18,10 +18,16 @@ public class UserService {
     @Resource
     private UserRepository userRepository;
 
+    /**
+     * 查询用户信息列表
+     */
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
 
+    /**
+     * 根据用户名获取用户信息
+     */
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
         Optional<User> optionalUser = userRepository.findByUsername(username);
@@ -31,12 +37,18 @@ public class UserService {
         throw EntityNotExistException.build("UserNotFound", "此用户不存在");
     }
 
+    /**
+     * 保存用户信息
+     */
     @Transactional(rollbackFor = Exception.class)
     public void save(UserParams userParams) {
         userRepository.save(User.builder().username(userParams.getUsername()).password(userParams.getPassword())
                 .createTime(Instant.now()).modifyTime(Instant.now()).build());
     }
 
+    /**
+     * 根据用户id获取用户信息
+     */
     @Transactional(readOnly = true)
     public User findUserById(long userId) {
         Optional<User> optional = userRepository.findById(userId);

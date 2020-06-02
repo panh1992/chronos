@@ -21,6 +21,9 @@ import java.util.Map;
 @Configuration
 public class GlobalExceptionHandler extends AbstractErrorWebExceptionHandler {
 
+    /**
+     * 创建全局异常处理
+     */
     public GlobalExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
                                   ApplicationContext applicationContext, ServerCodecConfigurer serverCodecConfigurer) {
         super(errorAttributes, resourceProperties, applicationContext);
