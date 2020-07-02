@@ -28,7 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "user")
-public class User extends TimeEntity {
+public class User extends BaseTime {
 
     /**
      * 用户主键

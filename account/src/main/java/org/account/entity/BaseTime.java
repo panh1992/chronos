@@ -13,7 +13,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public class TimeEntity {
+public class BaseTime {
 
     /**
      * 创建时间
