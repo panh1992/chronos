@@ -1,8 +1,8 @@
 ext {
     junitVersion = '4.12'
     lombokVersion = '1.18.12'
-    postgresqlVersion = '42.2.12'
     commonsVersion = '2.8.0'
+    mysqlVersion = '8.0.20'
 }
 
 buildscript {

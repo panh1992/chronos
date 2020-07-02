@@ -21,6 +21,7 @@ public class UserService {
     /**
      * 查询用户信息列表
      */
+    @Transactional(readOnly = true)
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
