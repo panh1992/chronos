@@ -2,7 +2,6 @@ package org.account.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -19,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -26,9 +26,8 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "user")
-public class User extends BaseTime {
+public class User {
 
     /**
      * 用户主键
@@ -48,6 +47,16 @@ public class User extends BaseTime {
      * 用户密码
      */
     private String password;
+
+    /**
+     * 创建时间
+     */
+    private Instant createTime;
+
+    /**
+     * 更新时间
+     */
+    private Instant modifyTime;
 
     /**
      * 用户所属角色信息

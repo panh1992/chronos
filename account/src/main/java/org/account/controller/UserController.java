@@ -1,10 +1,10 @@
 package org.account.controller;
 
 import org.account.entity.User;
+import org.account.message.MessageUtil;
 import org.account.service.UserService;
 import org.core.params.UserParams;
 import org.core.resp.UserRes;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,13 +18,20 @@ import java.time.Instant;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/accounts",
-        consumes = MediaType.APPLICATION_JSON_VALUE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/accounts")
 public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private MessageUtil messageUtil;
+
+    @GetMapping("/test")
+    public String test() {
+        messageUtil.sendMessage();
+        return "Ok";
+    }
 
     /**
      * 查询用户信息列表

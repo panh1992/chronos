@@ -2,22 +2,17 @@ package org.account.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.Instant;
 
 /**
  * 系统资源信息
@@ -27,9 +22,8 @@ import javax.persistence.Table;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "resource")
-public class Resource extends BaseTime {
+public class Resource {
 
     /**
      * 资源主键
@@ -71,11 +65,13 @@ public class Resource extends BaseTime {
     private String description;
 
     /**
-     * 资源对应的角色信息
+     * 创建时间
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id",
-            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
-    private Role role;
+    private Instant createTime;
+
+    /**
+     * 更新时间
+     */
+    private Instant modifyTime;
 
 }

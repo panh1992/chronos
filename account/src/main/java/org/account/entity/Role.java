@@ -2,7 +2,6 @@ package org.account.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -25,9 +25,8 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "role")
-public class Role extends BaseTime {
+public class Role {
 
     /**
      * 角色主键
@@ -47,6 +46,16 @@ public class Role extends BaseTime {
      * 角色描述
      */
     private String description;
+
+    /**
+     * 创建时间
+     */
+    private Instant createTime;
+
+    /**
+     * 更新时间
+     */
+    private Instant modifyTime;
 
     /**
      * 角色下资源信息
