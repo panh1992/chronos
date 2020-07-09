@@ -1,19 +1,19 @@
 dependencies {
     implementation project(':core')
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-consul-discovery'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-stream-rabbit'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch'
     implementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: "${elasticsearchVersion}"
     implementation group: 'org.elasticsearch.client', name: 'transport', version: "${elasticsearchVersion}"
     implementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-client', version: "${elasticsearchVersion}"
     implementation group: 'org.elasticsearch', name: 'elasticsearch', version: "${elasticsearchVersion}"
     implementation group: 'org.elasticsearch.plugin', name: 'transport-netty4-client', version: "${elasticsearchVersion}"
-    implementation group: 'mysql', name: 'mysql-connector-java', version: "${rootProject.mysqlVersion}"
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: "${mysqlVersion}"
     implementation group: 'org.apache.commons', name: 'commons-pool2', version: "${commonsVersion}"
 }
