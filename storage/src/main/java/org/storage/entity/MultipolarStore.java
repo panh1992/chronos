@@ -1,12 +1,12 @@
-package org.account.entity;
+package org.storage.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.core.enums.StoreFileStatus;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,54 +16,53 @@ import java.io.Serializable;
 import java.time.Instant;
 
 /**
- * 系统资源信息
+ * 多级存储层级
  */
 @Data
 @Entity
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "resource")
-public class Resource implements Serializable {
+@Table(name = "multipolar_store")
+public class MultipolarStore implements Serializable {
 
     /**
-     * 资源主键
+     * 多级存储主键
      */
     @Id
-    @Column(name = "resource_id")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflake-id")
-    @GenericGenerator(name = "snowflake-id", strategy = "org.account.configuration.SnowflakeIdGenerator")
-    private Long resourceId;
+    @GenericGenerator(name = "snowflake-id", strategy = "org.storage.configuration.SnowflakeIdGenerator")
+    private Long multipolarStoreId;
 
     /**
-     * 所属模块
+     * 对应的存储文件主键
      */
-    private String module;
+    private Long fileId;
 
     /**
-     * 资源名称
+     * 实际存储在所属层级的状态
      */
-    private String name;
+    private StoreFileStatus status;
 
     /**
-     * 请求 URI
+     * 存储文件级别
      */
-    private String uri;
+    private Integer level;
 
     /**
-     * 请求 Method
+     * 是否是当前激活层级
      */
-    private String method;
+    private Boolean isActive = Boolean.FALSE;
 
     /**
-     * 资源标识
+     * 实际存储路径
      */
-    private String permission;
+    private String storePath;
 
     /**
-     * 权限描述
+     * 存储文件大小
      */
-    private String description;
+    private Long storeSize;
 
     /**
      * 创建时间

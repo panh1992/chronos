@@ -1,4 +1,4 @@
-package org.account.entity;
+package org.storage.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,52 +15,41 @@ import java.io.Serializable;
 import java.time.Instant;
 
 /**
- * 系统资源信息
+ * 存储空间
  */
 @Data
 @Entity
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "resource")
-public class Resource implements Serializable {
+@Table(name = "store_spaces")
+public class StoreSpaces implements Serializable {
 
     /**
-     * 资源主键
+     * 存储空间主键
      */
     @Id
-    @Column(name = "resource_id")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflake-id")
-    @GenericGenerator(name = "snowflake-id", strategy = "org.account.configuration.SnowflakeIdGenerator")
-    private Long resourceId;
+    @GenericGenerator(name = "snowflake-id", strategy = "org.storage.configuration.SnowflakeIdGenerator")
+    private Long storeSpacesId;
 
     /**
-     * 所属模块
+     * 创建者主键
      */
-    private String module;
+    private Long creatorId;
 
     /**
-     * 资源名称
+     * 存储空间名称
      */
     private String name;
 
     /**
-     * 请求 URI
+     * 是否删除 (逻辑层面删除标识)
      */
-    private String uri;
+    private Boolean isDeleted = Boolean.FALSE;
 
     /**
-     * 请求 Method
-     */
-    private String method;
-
-    /**
-     * 资源标识
-     */
-    private String permission;
-
-    /**
-     * 权限描述
+     * 存储空间描述信息
      */
     private String description;
 

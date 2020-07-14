@@ -1,0 +1,35 @@
+spring:
+  cloud:
+    consul:
+      discovery:
+        serviceName: ${spring.application.name}
+        instanceId: ${spring.application.name}-${server.port}
+        health-check-path: /actuator/health
+        preferIpAddress: true
+    stream:
+      binders:
+        local_rabbit:
+          type: rabbit
+      bindings:
+        input:
+          destination: chronos
+          group: storage
+          content-type: application/json
+          header-mode: raw
+        output:
+          destination: chronos
+          group: storage
+          content-type: application/json
+          header-mode: raw
+      rabbit:
+        bindings:
+          input:
+            consumer:
+              auto-bind-dlq: true
+              delayed-exchange: true
+          output:
+            producer:
+              delayed-exchange: true
+feign:
+  hystrix:
+    enabled: true

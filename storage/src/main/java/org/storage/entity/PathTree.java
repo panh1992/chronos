@@ -1,4 +1,4 @@
-package org.account.entity;
+package org.storage.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,54 +15,43 @@ import java.io.Serializable;
 import java.time.Instant;
 
 /**
- * 系统资源信息
+ * 文件的树形结构存储信息
  */
 @Data
 @Entity
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "resource")
-public class Resource implements Serializable {
+@Table(name = "path_tree")
+public class PathTree implements Serializable {
 
     /**
-     * 资源主键
+     * 文件树形结构主键
      */
     @Id
-    @Column(name = "resource_id")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflake-id")
-    @GenericGenerator(name = "snowflake-id", strategy = "org.account.configuration.SnowflakeIdGenerator")
-    private Long resourceId;
+    @GenericGenerator(name = "snowflake-id", strategy = "org.storage.configuration.SnowflakeIdGenerator")
+    private Long pathTreeId;
 
     /**
-     * 所属模块
+     * 路径树的祖先文件主键
      */
-    private String module;
+    private Long ancestorId;
 
     /**
-     * 资源名称
+     * 路径树的子孙文件主键
      */
-    private String name;
+    private Long descendantId;
 
     /**
-     * 请求 URI
+     * 相对层级深度,自我引用为0
      */
-    private String uri;
+    private Integer depth;
 
     /**
-     * 请求 Method
+     * 是否删除 (逻辑层面删除标识)
      */
-    private String method;
-
-    /**
-     * 资源标识
-     */
-    private String permission;
-
-    /**
-     * 权限描述
-     */
-    private String description;
+    private Boolean isDeleted = Boolean.FALSE;
 
     /**
      * 创建时间

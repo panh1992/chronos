@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PathUtil {
 
-    private static final String STORAGE_PREFIX = "chronos:/";
+    private static final String STORAGE_PREFIX = "chronos:";
 
     /**
      * 判断是否为存储路径
@@ -27,7 +27,7 @@ public final class PathUtil {
      * 根据文件路径 获取 文件名集合
      */
     public static List<String> getFileNames(String path) {
-        return Arrays.stream(path.replaceFirst(STORAGE_PREFIX, "").split("/"))
+        return Arrays.stream(path.replaceFirst(STORAGE_PREFIX, "").split("[/\\\\]"))
                 .filter(x -> !Strings.isNullOrEmpty(x)).collect(Collectors.toList());
     }
 
