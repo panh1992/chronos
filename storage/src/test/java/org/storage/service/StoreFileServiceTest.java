@@ -1,6 +1,7 @@
 package org.storage.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.storage.StorageApplication;
 import javax.annotation.Resource;
 
 @Slf4j
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = StorageApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StoreFileServiceTest {

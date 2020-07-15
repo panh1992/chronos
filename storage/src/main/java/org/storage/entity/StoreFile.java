@@ -1,6 +1,7 @@
 package org.storage.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -88,6 +89,7 @@ public class StoreFile implements Serializable {
     /**
      * 是否为目录
      */
+    @Builder.Default
     private Boolean isDir = Boolean.FALSE;
 
     /**

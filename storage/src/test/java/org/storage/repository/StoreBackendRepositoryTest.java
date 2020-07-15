@@ -2,6 +2,7 @@ package org.storage.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.core.enums.AuthType;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import java.time.Instant;
 
 @Slf4j
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = StorageApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StoreBackendRepositoryTest {

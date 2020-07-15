@@ -1,6 +1,7 @@
 package org.storage.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -87,6 +88,7 @@ public class UploadTask implements Serializable {
     /**
      * 是否删除 (逻辑层面删除标识)
      */
+    @Builder.Default
     private Boolean isDeleted = Boolean.FALSE;
 
 }

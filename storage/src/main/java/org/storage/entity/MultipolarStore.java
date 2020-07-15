@@ -1,6 +1,7 @@
 package org.storage.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -52,6 +53,7 @@ public class MultipolarStore implements Serializable {
     /**
      * 是否是当前激活层级
      */
+    @Builder.Default
     private Boolean isActive = Boolean.FALSE;
 
     /**
