@@ -1,6 +1,7 @@
 = Chronos
 
 image:https://www.travis-ci.org/panh1992/chronos.svg?branch=master["Build Status", link="https://www.travis-ci.org/panh1992/chronos"]
+image:https://img.shields.io/sonar/quality_gate/61abf1006cc8e62edad0eddd22ceae6781086ff8?server=https%3A%2F%2Fsonarcloud.io[Sonar Quality Gate]
 image:https://img.shields.io/github/languages/count/panh1992/chronos[GitHub language count]
 image:https://img.shields.io/github/languages/top/panh1992/chronos[GitHub top language]
 image:https://img.shields.io/github/repo-size/panh1992/chronos[GitHub repo size]
