@@ -1,18 +1,26 @@
 language: java
 
 os: linux
+
 jdk:
   - openjdk11
 
+addons:
+  sonarcloud:
+    organization: "$SONAR_ORGANIZATION"
+    token:
+      secure: "$SONAR_TOKEN"
+
 script:
-  - jdk_switcher use openjdk11
-  - gradle clean
-  - gradle build
+  - ./gradlew clean build
+  - ./gradlew sonarqube -Dsonar.verbose=true -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_LOGIN
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
+    - $HOME/.sonar/cache/
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
