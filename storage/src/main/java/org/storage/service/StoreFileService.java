@@ -1,7 +1,9 @@
 package org.storage.service;
 
+import org.core.params.StoreFileParams;
+
 public interface StoreFileService {
 
-    void saveFileInfo(String filePath, boolean isDir, Long fileSize);
+    void createStoreFileInfo(Long creatorId, StoreFileParams params);
 
 }

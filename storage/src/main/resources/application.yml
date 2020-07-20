@@ -2,7 +2,7 @@ server:
   port: 8200
 spring:
   application:
-    name: account
+    name: storage
   cache:
     type: redis
     redis:

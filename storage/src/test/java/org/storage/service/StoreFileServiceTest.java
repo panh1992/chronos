@@ -1,6 +1,7 @@
 package org.storage.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.core.params.StoreFileParams;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +22,9 @@ public class StoreFileServiceTest {
 
     @Test
     public void saveFile() {
-        String filePath = "/Users/panhong/Projects";
-        storeFileService.saveFileInfo(filePath, true, null);
+        String filePath = "/test/a/b/c.txt";
+        storeFileService.createStoreFileInfo(1L, StoreFileParams.builder().storeSpaceId(123321L)
+                .filePath(filePath).isDir(false).fileSize(2048L).build());
     }
 
 }

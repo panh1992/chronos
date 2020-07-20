@@ -10,10 +10,16 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: auth
+        - id: account
           uri: lb://account
           predicates:
-            - Path=/auth/**
+            - Path=/account/**
+          filters:
+            - StripPrefix=1
+        - id: storage
+          uri: lb://storage
+          predicates:
+            - Path=/storage/**
           filters:
             - StripPrefix=1
   redis:
@@ -39,4 +45,3 @@ chronos:
       - /actuator/health
       - /api/socket/**
       - /login
-      - /auth/accounts/123

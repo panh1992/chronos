@@ -23,8 +23,8 @@ import java.time.Instant;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "store_spaces")
-public class StoreSpaces implements Serializable {
+@Table(name = "store_space")
+public class StoreSpace implements Serializable {
 
     /**
      * 存储空间主键
