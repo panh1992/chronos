@@ -19,7 +19,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResp exceptionHandle() {
+    public ErrorResp exceptionHandle(Exception e) {
+        e.printStackTrace();
         return ErrorResp.builder().code(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .message("服务内部错误").build();
     }

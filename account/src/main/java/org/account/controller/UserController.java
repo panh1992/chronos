@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/accounts")
+@RequestMapping(value = "/users")
 public class UserController {
 
     @Resource

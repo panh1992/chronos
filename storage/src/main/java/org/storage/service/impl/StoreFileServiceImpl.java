@@ -1,6 +1,7 @@
 package org.storage.service.impl;
 
 import org.core.enums.FileStatus;
+import org.core.exception.EntityAlreadyExistsException;
 import org.core.params.StoreFileParams;
 import org.core.util.PathUtil;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class StoreFileServiceImpl implements StoreFileService {
     @Override
     public void createStoreFileInfo(Long creatorId, StoreFileParams params) {
         List<String> fileNames = PathUtil.getFileNames(params.getFilePath());
+        Long fileId = storeFileRepository.findFileIdByStoreFilePath(params.getStoreSpaceId(),
+                "/".concat(String.join("/", fileNames)), Boolean.FALSE);
+        if (Objects.nonNull(fileId)) {
+            throw EntityAlreadyExistsException.build("新增失败，此文件已存在");
+        }
         String filePath = "";
         Long ancestorId = null;
         Instant currentTime = Instant.now();
@@ -37,7 +43,7 @@ public class StoreFileServiceImpl implements StoreFileService {
             String fileName = iterator.next();
             boolean isLast = !iterator.hasNext();
             filePath = filePath.concat("/").concat(fileName);
-            Long fileId = storeFileRepository.findFileIdByStoreFilePath(params.getStoreSpaceId(), filePath, Boolean.FALSE);
+            fileId = storeFileRepository.findFileIdByStoreFilePath(params.getStoreSpaceId(), filePath, Boolean.FALSE);
             if (Objects.isNull(fileId)) {
                 StoreFile storeFile = StoreFile.builder().creatorId(creatorId).name(fileName).createTime(currentTime)
                         .status(FileStatus.AVAILABLE).isDeleted(false).storeSpaceId(params.getStoreSpaceId())

@@ -1,5 +1,6 @@
 server:
-  port: 8200
+  port: 7362
+
 spring:
   application:
     name: storage
@@ -48,7 +49,21 @@ spring:
     username: chronos
     password: chronos
     virtual-host: chronos
+
 chronos:
   snowflake-id:
     data-center-id: 2
     worker-id: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露xxx端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        include: "*"
+  endpoint:
+    health:
+      # 是否展示健康检查详情
+      show-details: always
+  server:
+    port: 10003

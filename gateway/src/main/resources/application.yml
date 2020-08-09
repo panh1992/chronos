@@ -34,6 +34,19 @@ spring:
         min-idle: 5
         max-wait: 1000
 
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露xxx端点，如需暴露多个，用,分隔；如需暴露所有端点，用'*'
+        include: "*"
+  endpoint:
+    health:
+      # 是否展示健康检查详情
+      show-details: always
+  server:
+    port: ${random.int[7000,8000]}
+
 chronos:
   security:
     jwt:

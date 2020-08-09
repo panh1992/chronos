@@ -1,5 +1,6 @@
 server:
-  port: 8100
+  port: 7780
+
 spring:
   application:
     name: account
@@ -48,7 +49,19 @@ spring:
     username: chronos
     password: chronos
     virtual-host: chronos
+
 chronos:
   snowflake-id:
     data-center-id: 1
     worker-id: 1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  server:
+    port: 10000
