@@ -17,6 +17,11 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 存储空间服务
+ *
+ * @author panhong
+ */
 @Service
 public class StoreSpaceServiceImpl implements StoreSpaceService {
 

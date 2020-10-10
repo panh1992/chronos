@@ -17,6 +17,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 文件业务处理方法
+ *
+ * @author panhong
+ */
 @Service
 public class StoreFileServiceImpl implements StoreFileService {
 

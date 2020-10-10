@@ -4,6 +4,11 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
+/**
+ * 系统配置信息
+ *
+ * @author panhong
+ */
 @Data
 @ConfigurationProperties(prefix = "chronos")
 public class Properties {

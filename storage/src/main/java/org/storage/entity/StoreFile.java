@@ -67,7 +67,7 @@ public class StoreFile implements Serializable {
     private String format;
 
     /**
-     * 文件内容的MD5校验码
+     * 文件内容的校验码
      */
     private String checksum;
 

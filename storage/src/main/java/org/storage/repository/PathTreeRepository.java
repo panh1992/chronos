@@ -8,8 +8,20 @@ import org.storage.entity.PathTree;
 
 import java.time.Instant;
 
+/**
+ * 文件树形结构关系 Repository
+ *
+ * @author panhong
+ */
 public interface PathTreeRepository extends JpaRepository<PathTree, Long> {
 
+    /**
+     * 保存文件属性关系信息
+     *
+     * @param ancestorId   祖先文件id
+     * @param descendantId 子孙文件id
+     * @param currentTime  创建时间
+     */
     @Modifying
     @Query(value = "INSERT INTO path_tree(ancestor_id, descendant_id, depth, is_deleted, create_time) SELECT "
             + "t.ancestor_id, :descendantId, t.depth + 1, false, :currentTime FROM path_tree AS t WHERE t.descendant_id "

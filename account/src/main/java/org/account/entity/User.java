@@ -22,6 +22,11 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * 用户信息
+ *
+ * @author panhong
+ */
 @Data
 @Entity
 @SuperBuilder
