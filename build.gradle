@@ -72,6 +72,10 @@ subprojects {
         testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
     }
 
+    compileJava {
+        options.compilerArgs << '-parameters' << '-Djava.util.concurrent.ForkJoinPool.common.parallelism=8'
+    }
+
     // 排除 bootJar 指定Main方法
     project(":core") {
         bootJar { enabled = false }

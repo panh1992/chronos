@@ -17,6 +17,8 @@ import java.util.Objects;
 
 /**
  * 签名验证，请求头处理
+ *
+ * @author panhong
  */
 @Component
 public class AuthSignatureFilter implements GlobalFilter {

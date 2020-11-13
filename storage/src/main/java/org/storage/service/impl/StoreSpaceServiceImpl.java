@@ -42,7 +42,8 @@ public class StoreSpaceServiceImpl implements StoreSpaceService {
                 .isDeleted(false).createTime(Instant.now()).creatorId(creatorId).build();
         storeSpaceRepository.save(storeSpace);
         storeFileService.createStoreFileInfo(creatorId, StoreFileParams.builder()
-                .filePath("/".concat(params.getName())).fileSize(0L).isDir(true).build());
+                .storeSpaceId(storeSpace.getStoreSpacesId()).filePath("/".concat(params.getName()))
+                .fileSize(0L).isDir(true).build());
     }
 
     @Override

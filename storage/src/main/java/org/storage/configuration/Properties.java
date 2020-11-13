@@ -17,7 +17,7 @@ public class Properties {
     private SnowflakeId snowflakeId = new SnowflakeId();
 
     @Data
-    protected class SnowflakeId {
+    protected static class SnowflakeId {
 
         /**
          * 工作机器ID (0~31)

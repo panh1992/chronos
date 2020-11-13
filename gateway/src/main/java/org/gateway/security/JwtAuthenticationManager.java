@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class JwtAuthenticationManager implements ReactiveAuthenticationManager {
 
-    private Properties properties;
+    private final Properties properties;
 
     public JwtAuthenticationManager(Properties properties) {
         this.properties = properties;

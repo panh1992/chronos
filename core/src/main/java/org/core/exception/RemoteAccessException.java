@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 /**
  * 远程接口访问异常
  */
-public class RemoteAccessException extends BusinessException {
+public class RemoteAccessException extends BaseBusinessException {
 
     private RemoteAccessException(Response.Status status, String code, String message) {
         super(status, code, message);

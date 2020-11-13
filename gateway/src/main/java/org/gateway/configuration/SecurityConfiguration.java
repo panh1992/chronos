@@ -3,7 +3,7 @@ package org.gateway.configuration;
 import org.gateway.security.JwtAuthenticationManager;
 import org.gateway.security.JwtAuthenticationWebFilter;
 import org.gateway.security.UserAuthenticationWebFilter;
-import org.gateway.service.UserDetailsService;
+import org.gateway.service.ReactiveUserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -77,7 +77,7 @@ public class SecurityConfiguration {
 
     @Bean
     public ReactiveUserDetailsService userDetailsService() {
-        return new UserDetailsService();
+        return new ReactiveUserDetailsServiceImpl();
     }
 
     @Bean

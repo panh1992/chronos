@@ -15,7 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
@@ -66,9 +67,12 @@ public class Role implements Serializable {
     /**
      * 角色下资源信息
      */
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id",
-        foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "role_resource_ref",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "resource_id"),
+            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
+            inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private List<Resource> resources;
 
 }

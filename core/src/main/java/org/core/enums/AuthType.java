@@ -2,6 +2,8 @@ package org.core.enums;
 
 /**
  * 认证访问方式
+ *
+ * @author panhong
  */
 public enum AuthType {
 

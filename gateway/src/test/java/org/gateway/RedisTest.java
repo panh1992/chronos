@@ -71,6 +71,7 @@ public class RedisTest {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    static
     class Matcher {
 
         private String method;

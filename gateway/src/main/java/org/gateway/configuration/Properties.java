@@ -22,7 +22,7 @@ public class Properties {
     private Security security = new Security();
 
     @Data
-    public class Security {
+    public static class Security {
 
         /**
          * Jwt token的配置项
@@ -36,7 +36,7 @@ public class Properties {
         private String[] excludedUri;
 
         @Data
-        public class Jwt {
+        public static class Jwt {
 
             /**
              * JWT token 失效时间

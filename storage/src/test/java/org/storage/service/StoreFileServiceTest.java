@@ -14,8 +14,12 @@ import javax.annotation.Resource;
 @Slf4j
 @Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StorageApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = StorageApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class StoreFileServiceTest {
+
+    private final static long CREATOR_ID = 63351989043597312L;
+
+    private final static long STORE_SPACE_ID = 63412983837237248L;
 
     @Resource
     private StoreFileService storeFileService;
@@ -23,7 +27,7 @@ public class StoreFileServiceTest {
     @Test
     public void saveFile() {
         String filePath = "/test/a/b/c.txt";
-        storeFileService.createStoreFileInfo(1L, StoreFileParams.builder().storeSpaceId(123321L)
+        storeFileService.createStoreFileInfo(CREATOR_ID, StoreFileParams.builder().storeSpaceId(STORE_SPACE_ID)
                 .filePath(filePath).isDir(false).fileSize(2048L).build());
     }
 

@@ -7,6 +7,8 @@ import lombok.Data;
 
 /**
  * 统一错误返回实体
+ *
+ * @author panhong
  */
 @Data
 @Builder

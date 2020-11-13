@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
  * 实体已存在异常
  */
 @Getter
-public class EntityAlreadyExistsException extends BusinessException {
+public class EntityAlreadyExistsException extends BaseBusinessException {
 
     private EntityAlreadyExistsException(Response.Status status, String code, String message) {
         super(status, code, message);

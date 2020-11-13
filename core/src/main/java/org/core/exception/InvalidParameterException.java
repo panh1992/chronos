@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
  * 参数错误异常
  */
 @Getter
-public class InvalidParameterException extends BusinessException {
+public class InvalidParameterException extends BaseBusinessException {
 
     private InvalidParameterException(Response.Status status, String code, String message) {
         super(status, code, message);

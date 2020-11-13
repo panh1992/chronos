@@ -20,7 +20,7 @@ public final class SnowflakeIdWorker {
     /**
      * 开始时间截 (2015-01-01)
      */
-    private static final long TW_EPOCH = 1587722428612L;
+    private static final long TW_EPOCH = 1605179977583L;
 
     /**
      * 机器id所占的位数
@@ -166,6 +166,11 @@ public final class SnowflakeIdWorker {
      */
     private long timeGen() {
         return System.currentTimeMillis();
+    }
+
+    public static void main(String[] args) {
+        SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker(1, 1);
+        System.out.println(snowflakeIdWorker.nextId());
     }
 
 }

@@ -16,6 +16,8 @@ import java.time.Instant;
 
 /**
  * 通用帮助类
+ *
+ * @author panhong
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CommonUtil {

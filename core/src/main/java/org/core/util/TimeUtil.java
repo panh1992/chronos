@@ -7,6 +7,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * 日期时间工具类
+ *
+ * @author panhong
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TimeUtil {
 

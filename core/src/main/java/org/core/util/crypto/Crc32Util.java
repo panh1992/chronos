@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Crc32Util {
 
-    private static int[] ptiTable = new int[256];
+    private static final int[] PTI_TABLE = new int[256];
 
     static {
         int data;
@@ -27,7 +27,7 @@ public final class Crc32Util {
                 }
                 data <<= 1;
             }
-            ptiTable[i] = accum;
+            PTI_TABLE[i] = accum;
         }
     }
 
@@ -47,7 +47,7 @@ public final class Crc32Util {
             return Integer.toHexString(crc32).toUpperCase();
         }
         for (byte data : bytes) {
-            crc32 = (crc32 << 8) ^ ptiTable[(crc32 >>> 24) ^ (data & 0xFF)];
+            crc32 = (crc32 << 8) ^ PTI_TABLE[(crc32 >>> 24) ^ (data & 0xFF)];
         }
         return Integer.toHexString(crc32).toUpperCase();
     }

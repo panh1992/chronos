@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
  * 实体未找到异常
  */
 @Getter
-public class EntityNotExistException extends BusinessException {
+public class EntityNotExistException extends BaseBusinessException {
 
     private EntityNotExistException(Response.Status status, String code, String message) {
         super(status, code, message);

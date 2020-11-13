@@ -7,6 +7,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.storage.configuration.Properties;
 
+/**
+ * 存储服务
+ *
+ * @author panhong
+ */
 @EnableTransactionManagement
 @EnableConfigurationProperties(value = Properties.class)
 @EnableJpaRepositories("org.storage.repository")

@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 
+/**
+ * account 服务配置信息
+ *
+ * @author panhong
+ */
 @Configuration
 public class AccountConfiguration {
 

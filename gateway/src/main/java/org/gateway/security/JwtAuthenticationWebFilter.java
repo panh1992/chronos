@@ -20,11 +20,11 @@ public class JwtAuthenticationWebFilter extends AuthenticationWebFilter {
         this.authPermitList = authPermitList;
         setServerAuthenticationConverter(exchange -> Mono.just(new JwtAuthenticationToken(exchange
                 .getRequest().getHeaders().getFirst(Constant.X_AUTHORIZATION_HEADER))));
-        setRequiresAuthenticationMatcher(new JWTHeadersExchangeMatcher());
+        setRequiresAuthenticationMatcher(new JwtHeadersExchangeMatcher());
         setAuthenticationFailureHandler(authenticationFailureHandler);
     }
 
-    class JWTHeadersExchangeMatcher implements ServerWebExchangeMatcher {
+    class JwtHeadersExchangeMatcher implements ServerWebExchangeMatcher {
 
         @Override
         public Mono<MatchResult> matches(final ServerWebExchange exchange) {

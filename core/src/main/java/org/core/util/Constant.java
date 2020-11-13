@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 /**
  * 系统常量类
+ *
+ * @author panhong
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constant {

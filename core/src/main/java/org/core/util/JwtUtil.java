@@ -57,7 +57,7 @@ public final class JwtUtil {
             + "EkIYAJ9HV07wciCB2Z3vukoJxw8eA2BMg+7QwRUO1cNrcYtTG6UjHvx9yG8J+8lSlk2d6I9ZnltKgzqey9ogMHpFB/gEeoSr4x6S"
             + "SOPqaY5G6msVmcqdwIDAQAB";
 
-    private static final String ISSUER = "athena";
+    private static final String ISSUER = "chronos";
 
     private static final String AUDIENCE = "web";
 
@@ -78,13 +78,20 @@ public final class JwtUtil {
      */
     public static String createToken(String subject, long minutes) throws JoseException {
         JwtClaims claims = new JwtClaims();
-        claims.setIssuer(ISSUER);  // 令牌的创建者
-        claims.setAudience(AUDIENCE); // 要将令牌发送给谁
-        claims.setExpirationTimeMinutesInTheFuture(minutes); // 令牌到期的时间 从现在起 分钟数
-        claims.setGeneratedJwtId(); // 用于令牌的唯一标识符
-        claims.setIssuedAtToNow();  // 发出/创建令牌时（现在）
-        claims.setNotBeforeMinutesInThePast(2); // 令牌尚未生效的时间（2分钟前）
-        claims.setSubject(subject); // 主题/委托人是令牌的对象
+        // 令牌的创建者
+        claims.setIssuer(ISSUER);
+        // 要将令牌发送给谁
+        claims.setAudience(AUDIENCE);
+        // 令牌到期的时间 从现在起 分钟数
+        claims.setExpirationTimeMinutesInTheFuture(minutes);
+        // 用于令牌的唯一标识符
+        claims.setGeneratedJwtId();
+        // 发出/创建令牌时（现在）
+        claims.setIssuedAtToNow();
+        // 令牌尚未生效的时间（2分钟前）
+        claims.setNotBeforeMinutesInThePast(2);
+        // 主题/委托人是令牌的对象
+        claims.setSubject(subject);
 
         JsonWebSignature jws = new JsonWebSignature();
         jws.setPayload(claims.toJson());
@@ -100,14 +107,21 @@ public final class JwtUtil {
      * @param minutes 分钟数, 注意方法内会强转int
      */
     public static JwtClaims validation(String jwtToken, int minutes) throws InvalidJwtException {
-        JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireExpirationTime() // JWT必须有一个到期时间
-                .setMaxFutureValidityInMinutes(minutes) // 但到期时间不能太疯狂
-                .setAllowedClockSkewInSeconds(30) // 允许一些余地来验证基于时间的索赔，以解决时钟偏差问题
-                .setRequireSubject() // 必须有一个主题声明
-                .setExpectedIssuer(ISSUER) // 需要由谁发出
-                .setExpectedAudience(AUDIENCE) // 目标对象
-                .setVerificationKey(rsaPublicKey) // 使用公钥验证签名
-                .build();
+        JwtConsumer jwtConsumer = new JwtConsumerBuilder()
+                // JWT必须有一个到期时间
+                .setRequireExpirationTime()
+                // 但到期时间不能太疯狂
+                .setMaxFutureValidityInMinutes(minutes)
+                // 允许一些余地来验证基于时间的索赔，以解决时钟偏差问题
+                .setAllowedClockSkewInSeconds(30)
+                // 必须有一个主题声明
+                .setRequireSubject()
+                // 需要由谁发出
+                .setExpectedIssuer(ISSUER)
+                // 目标对象
+                .setExpectedAudience(AUDIENCE)
+                // 使用公钥验证签名
+                .setVerificationKey(rsaPublicKey).build();
 
         //  验证JWT并将其处理为声明
         JwtClaims jwtClaims = jwtConsumer.processToClaims(jwtToken);

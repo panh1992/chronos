@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
  * 系统错误
  */
 @Getter
-public class InternalServerError extends BusinessException {
+public class InternalServerError extends BaseBusinessException {
 
     private InternalServerError(Response.Status status, String code, String message) {
         super(status, code, message);

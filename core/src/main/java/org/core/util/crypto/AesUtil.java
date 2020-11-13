@@ -18,6 +18,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * AES 加解密工具类
+ *
+ * @author panhong
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AesUtil {
 
